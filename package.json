@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/consumables_service",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Shared backend library for consumable credits management with Drizzle ORM",
   "type": "module",
   "main": "./dist/index.js",
@@ -39,11 +39,11 @@
   "author": "Sudobility",
   "license": "BUSL-1.1",
   "peerDependencies": {
-    "@sudobility/types": "^1.9.67",
+    "@sudobility/types": "^1.9.68",
     "drizzle-orm": ">=0.44.0"
   },
   "devDependencies": {
-    "@sudobility/types": "^1.9.67",
+    "@sudobility/types": "^1.9.68",
     "drizzle-orm": "^0.45.1",
     "vitest": "^4.0.4",
     "@types/bun": "latest",
