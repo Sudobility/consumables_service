@@ -18,5 +18,16 @@ export {
   ConsumablesHelper,
   type DrizzleDb,
   validateWebhookSignature,
+  validateWebhookRequest,
   parseConsumablePurchaseEvent,
 } from "./helpers";
+
+export { RevenueCatClient } from "./helpers/RevenueCatClient";
+export type {
+  RevenueCatClientConfig,
+  RevenueCatCustomerInfo,
+  RevenueCatOffering,
+  RevenueCatOfferings,
+  RevenueCatNonSubscriptionPurchase,
+  RevenueCatPurchase,
+} from "./helpers/RevenueCatClient";

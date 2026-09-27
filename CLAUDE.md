@@ -8,7 +8,7 @@
 Shared backend library for consumable credits management with Drizzle ORM.
 
 **npm**: `@sudobility/consumables_service` (public)
-**Version**: 0.0.5
+**Version**: 0.1.7
 **License**: BUSL-1.1
 
 ## Tech Stack
@@ -87,8 +87,15 @@ Core business logic class. Constructed with `(db, tables, config)`:
 - `getUsageHistory(userId, limit?, offset?)` -- paginated, most-recent-first
 - `recordPurchaseFromWebhook(userId, transactionId, credits, source, productId, priceCents, currency)` -- idempotent; deduplicates by `transaction_ref_id`
 
+### RevenueCatClient
+- Server-only RevenueCat REST API v1 client; requires a Secret API key with customer read access.
+- `getOfferings(appUserId)` retrieves offerings, though the frontend SDK is preferred for storefront UI and prices.
+- `findCustomerPurchase(appUserId, transactionId, productId)` verifies the expected non-subscription transaction for that RevenueCat App User ID.
+- Keep the key on the server. The frontend uses the separate public SDK key.
+
 ### WebhookHelper
 - `validateWebhookSignature(rawBody, signature, secret)` -- HMAC-SHA256 validation using Node.js `crypto`
+- `validateWebhookRequest(...)` -- accepts RevenueCat HMAC signatures or configured Authorization headers
 - `parseConsumablePurchaseEvent(event)` -- extracts purchase data from RevenueCat webhook; only processes `NON_RENEWING_PURCHASE` and `INITIAL_PURCHASE` event types; maps store names to source (STRIPE->web, APP_STORE->apple, PLAY_STORE->google)
 
 ## Usage

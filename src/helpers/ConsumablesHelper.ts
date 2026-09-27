@@ -321,15 +321,29 @@ export class ConsumablesHelper {
       return { alreadyProcessed: true, balance: bal.balance };
     }
 
-    const result = await this.recordPurchase(userId, {
-      credits,
-      source,
-      transaction_ref_id: transactionId,
-      product_id: productId,
-      price_cents: priceCents,
-      currency,
-    });
-
-    return { alreadyProcessed: false, balance: result.balance };
+    try {
+      const result = await this.recordPurchase(userId, {
+        credits,
+        source,
+        transaction_ref_id: transactionId,
+        product_id: productId,
+        price_cents: priceCents,
+        currency,
+      });
+      return { alreadyProcessed: false, balance: result.balance };
+    } catch (error) {
+      // The API enforces a unique transaction_ref_id index. If a webhook and
+      // the authenticated purchase confirmation race, the losing transaction
+      // is rolled back and treated as the same successful, idempotent purchase.
+      const raced = await this.db
+        .select()
+        .from(this.tables.consumablePurchases)
+        .where(
+          eq(this.tables.consumablePurchases.transaction_ref_id, transactionId)
+        );
+      if (raced.length === 0) throw error;
+      const bal = await this.getBalance(userId);
+      return { alreadyProcessed: true, balance: bal.balance };
+    }
   }
 }
