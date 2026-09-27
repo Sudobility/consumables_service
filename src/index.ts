@@ -21,6 +21,11 @@ export {
   validateWebhookRequest,
   parseConsumablePurchaseEvent,
 } from "./helpers";
+export {
+  parseCreditProducts,
+  creditsForProduct,
+  type CreditProduct,
+} from "./helpers";
 
 export { RevenueCatClient } from "./helpers/RevenueCatClient";
 export type {
