@@ -1,6 +1,6 @@
 {
   "name": "@sudobility/consumables_service",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Shared backend library for consumable credits management with Drizzle ORM",
   "type": "module",
   "main": "./dist/index.js",
